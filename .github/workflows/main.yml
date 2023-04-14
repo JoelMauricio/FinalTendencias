@@ -19,10 +19,12 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd class-chat
           npm install
 
       - name: Lint code with ESLint
         run: |
+          cd class-chat
           npm run lint
         continue-on-error: true
 
