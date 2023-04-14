@@ -8,7 +8,7 @@ on: [push]
 
 jobs:
   integration:
-    runs-on: ubuntu-22.04
+    working_directory: ~/class-chat
 
     steps:
       # Code Checkout
