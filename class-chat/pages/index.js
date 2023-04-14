@@ -11,7 +11,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-8">
       <div className="flex flex-col items-center justify-center w-full h-full gap-4">
         <Nav />
-        <div className='h-full w-full'>
+        <div className='h-screen w-full'>
           <Chat />
         </div>
       </div>
