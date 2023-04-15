@@ -6,7 +6,7 @@ import Message from './Message';
 export default function Chat() {
     const channel = supabase.channel('messages:*');
     const [newMessage, setNewMessage] = useState([]);
-    const [messages, setMessages] = useState([{ message: 'Hola', date: '10:12' }]);
+    const [messages, setMessages] = useState([{ message: 'Hola', date: '10:12', user: false }, { message: 'Hola', date: '10:12', user: true }]);
 
     function handleMessage() {
         setMessages([...messages, { message: newMessage, date: '10:12' }])
@@ -20,8 +20,8 @@ export default function Chat() {
 
             </div>
             <div className=" rounded-md flex flex-col justify-center w-3/4 min-h-full bg-gray-800">
-                <div className='w-full h-full flex flex-col pt-4 px-4 overflow-hidden overflow-y-scroll'>
-                    {messages.map((message, index) => <Message key={index} message={message.message} date={message.date} />)}
+                <div className='w-full h-full flex flex-col pt-4 px-4 overflow-hidden overflow-y-scroll '>
+                    {messages.map((message, index) => <Message key={index} message={message.message} date={message.date} user={message.user} />)}
                 </div>
                 <div className='w-full flex p-4  '>
                     <input
