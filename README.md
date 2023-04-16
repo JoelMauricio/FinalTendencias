@@ -6,28 +6,28 @@ Los siguientes puntos son los esperados por cada equipo a implementar:
 
 ### Implementar al menos los 7 requeridos durante la práctica de los 12 factores
 
-    - Repositorio  
-    - Exposición de Puertos
-    - Dependencias  
-    - Concurrencia
-    - Configuración  
-    - Procesos Administrativos
-    - Servicios de Apoyo
+    - [x] Repositorio
+    - [ ] Exposición de Puertos
+    - [x] Dependencias  
+    - [ ] Concurrencia
+    - [ ] Configuración  
+    - [ ] Procesos Administrativos
+    - [ ] Servicios de Apoyo
 
 ### Implementar un flujo de CI/CD
 
-    1. Implementar pruebas automatizadas.
-    2. Implementar linting.
+    - [ ] Implementar pruebas automatizadas.
+    - [x] Implementar linting.
 
 ### Soluciones Enlatadas (out-of-the-box)
 
-    1. Crear una imagen de Docker del proyecto.
-    2. Utilizar una segunda herramienta y vincularla utilizando Docker-Compose, de ser posible.
-    3. Utilizar un ORM en caso de consultar datos a una BBDD.
+    - [ ] Crear una imagen de Docker del proyecto.
+    - [ ] Utilizar una segunda herramienta y vincularla utilizando Docker-Compose, de ser posible.
+    - [ ] Utilizar un ORM en caso de consultar datos a una BBDD.
 
 ### Networking
 
-    1. En caso de ser una aplicación web, exponer algún servicio o tarea; o bien consumir algún otro servicio mediante otro protocolo distinto al HTTP ya sea UDP, WebSocket o GraphQL.
+    - [ ] En caso de ser una aplicación web, exponer algún servicio o tarea; o bien consumir algún otro servicio mediante otro protocolo distinto al HTTP ya sea UDP, WebSocket o GraphQL.
 
 ___
 

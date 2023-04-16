@@ -6,22 +6,26 @@ import Message from './Message';
 export default function Chat() {
     const channel = supabase.channel('messages:*');
     const [newMessage, setNewMessage] = useState([]);
-    const [messages, setMessages] = useState([{ message: 'Hola', date: '10:12', user: false }, { message: 'Hola', date: '10:12', user: true }]);
+    const [messages, setMessages] = useState([{ message: 'Hola', date: '10:12', user: 'pedro' }, { message: 'Hola', date: '10:12', user: 'yo' }]);
+    const user = 'yo'
 
     function handleMessage() {
-        setMessages([...messages, { message: newMessage, date: '10:12' }])
+        if (newMessage === '') {
+            alert('no puedes enviar un mensaje vacio')
+            return
+        };
+        setMessages([...messages, { message: newMessage, date: '10:12', user: 'yo' }])
         console.log(newMessage);
     }
 
     return (
         <div className=" rounded-md flex justify-center min-w-full min-h-[40rem] h-full bg-slate-600">
-            <div className='w-1/4 min-h-[40rem] p-4 '>
+            <div className='w-1/4 h-full py-4 overflow-hidden overflow-y-auto'>
                 <ChatsList />
-
             </div>
             <div className=" rounded-md flex flex-col justify-center w-3/4 min-h-full bg-gray-800">
-                <div className='w-full h-full flex flex-col pt-4 px-4 overflow-hidden overflow-y-scroll '>
-                    {messages.map((message, index) => <Message key={index} message={message.message} date={message.date} user={message.user} />)}
+                <div className='w-full h-full flex flex-col pt-4 px-4 overflow-hidden overflow-y-auto gap-1'>
+                    {messages.map((message, index) => <Message key={index} message={message.message} date={message.date} isUser={message.user == user} user={message.user} />)}
                 </div>
                 <div className='w-full flex p-4  '>
                     <input
