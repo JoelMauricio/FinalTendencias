@@ -13,8 +13,8 @@ export default function ChatsList() {
     return (
         <div className="flex flex-col min-w-full min-h-[40rem] h-full">
             <div className="flex flex-col w-full h-full">
-                {chats.map((chat) => (
-                    <button key={chat.id} >
+                {chats.map((chat, index) => (
+                    <button key={index} >
                         <div className="flex items-center w-full h-full gap-4 hover:bg-slate-500 font-semibold p-2  ">
                             <Avatar className='h-[4rem] w-[4rem]' name={chat.chat_name} />
                             <span>{chat.chat_name}</span>
