@@ -38,14 +38,13 @@ jobs:
           cd class-chat
           npm run test
         continue-on-error: true
-      - uses: ArtiomTr/jest-coverage-report-action@v2
 
-      # - name: Upload pytest test results
-      #   uses: actions/upload-artifact@v3
+      # - name: Upload test results
+      # - uses: tanmen/jest-reporter@v1
+      #   if: always()
       #   with:
-      #     name: test-results-${{ github.ref_name }}.xml
-      #     path: junit/test-results-${{ github.ref_name }}.xml
-      #   if: ${{ always() }}
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Upload pytest test results
 
   # delivery:
   #   runs-on: ubuntu-22.04
