@@ -7,10 +7,10 @@ Los siguientes puntos son los esperados por cada equipo a implementar:
 ### Implementar al menos los 7 requeridos durante la práctica de los 12 factores
 
     - [x] Repositorio
-    - [ ] Exposición de Puertos
+    - [x] Exposición de Puertos
     - [x] Dependencias  
-    - [ ] Concurrencia
-    - [x] Configuración  
+    - [~] Concurrencia
+    - [x] Configuración
     - [ ] Procesos Administrativos
     - [ ] Servicios de Apoyo
 
