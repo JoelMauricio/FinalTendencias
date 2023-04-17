@@ -1,5 +1,6 @@
 import { supabase } from "./../lib/supabaseClient";
-import ChatsList from "./ChatsList";
+import { useSession, useSessionContext } from "@supabase/auth-helpers-react";
+import Login from "./login";
 import { useEffect, useState } from "react";
 import Message from "./Message";
 import { createRef } from "react";
@@ -7,10 +8,13 @@ import { createRef } from "react";
 export default function Chat() {
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const user = 1;
+  const session = useSession()
+  const [userId, setUserId] = useState(1);
 
+  console.log(session, userId)
   useEffect(() => {
     fetchMessages();
+    getUserId();
 
     const MessageChat = supabase
       .channel("custom-all-channel")
@@ -43,6 +47,21 @@ export default function Chat() {
     }
   }
 
+  async function getUserId() {
+    if (userId === 1) {
+      const { data, error } = await supabase.from("user").select("user_id").eq("uuid", session?.user.id)
+      if (error) {
+        console.log(error);
+      }
+      if (data?.length > 0) {
+        setUserId(data[0].user_id)
+      } else if (userId !== 1) {
+        alert("No se pudo obtener el id del usuario")
+      }
+    }
+  }
+
+
   async function handleMessage(e) {
     e.preventDefault();
 
@@ -52,7 +71,7 @@ export default function Chat() {
     }
     const { error } = await supabase
       .from("message")
-      .insert({ message_content: newMessage, sent_by: 1 }); //agregar el id del usuario
+      .insert({ message_content: newMessage, sent_by: userId }); //agregar el id del usuario
     if (error) {
       alert(error["message"]);
     }
@@ -69,10 +88,12 @@ export default function Chat() {
   }
 
   return (
-    <div className=" rounded-md flex justify-center min-w-full max-h-[1000px]">
-      {/* <div className='w-1/4 h-full py-4 overflow-hidden overflow-y-auto'>
-                <ChatsList />
-            </div> */}
+    <div className=" rounded-md flex justify-center min-w-full h-full max-h-[1000px] gap-2">
+      {!session ? (
+        <div className='w-1/4 min-h-full overflow-hidden overflow-y-auto'>
+          <Login />
+        </div>
+      ) : (null)}
       <div className=" rounded-md flex flex-col justify-center w-3/4 min-h-full bg-gray-800">
         <div className="w-full h-full flex flex-col pt-4 px-4 overflow-hidden overflow-y-auto gap-2">
           {" "}
@@ -82,7 +103,7 @@ export default function Chat() {
               key={index}
               message={message?.message_content}
               date={getDate(message.created_at)}
-              isUser={message.sent_by == user}
+              isUser={message.sent_by == userId}
               user={message.sent_by}
             />
           ))}
