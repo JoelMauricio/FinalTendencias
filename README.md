@@ -16,7 +16,7 @@ Los siguientes puntos son los esperados por cada equipo a implementar:
 
 ### Implementar un flujo de CI/CD
 
-    - [ ] Implementar pruebas automatizadas.
+    - [x] Implementar pruebas automatizadas.
     - [x] Implementar linting.
 
 ### Soluciones Enlatadas (out-of-the-box)
