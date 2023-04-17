@@ -37,7 +37,7 @@ jobs:
       - name: Test with Jest
         run: |
           cd class-chat
-          npm run test --doctest-modules --junitxml=junit/test-results-$.xml
+          npm run test
       continue-on-error: true
 
       # - name: Upload pytest test results
