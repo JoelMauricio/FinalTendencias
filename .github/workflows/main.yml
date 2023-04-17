@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ArtiomTr/jest-coverage-report-action@v2
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.2
@@ -39,6 +38,7 @@ jobs:
           cd class-chat
           npm run test
         continue-on-error: true
+      - uses: ArtiomTr/jest-coverage-report-action@v2
 
       # - name: Upload pytest test results
       #   uses: actions/upload-artifact@v3
