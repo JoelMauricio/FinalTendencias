@@ -2,27 +2,45 @@ import { supabase } from './../lib/supabaseClient';
 import ChatsList from './ChatsList';
 import { useEffect, useState } from 'react';
 import Message from './Message';
+import { createRef } from 'react';
 
 export default function Chat() {
-    const channel = supabase.channel('messages:*');
     const [newMessage, setNewMessage] = useState('');
-    const [messages, setMessages] = useState([{ message: 'Hola', date: '10:12', user: 'pedro' }, { message: 'Hola', date: '10:12', user: 'yo' }]);
-    const user = 1
+    const [messages, setMessages] = useState([]);
+    const user = 1;
+
+
 
     useEffect(() => {
-        fetchMessages(1);
-        // channel.on('INSERT', (payload) => {
-        //     setMessages([...messages, payload.new]);
-        // });
-    }, [messages]);
+        fetchMessages();
 
-    async function fetchMessages(chatId) {
-        const { data, error } = await supabase.from('chat_message').select('*,message(*)').eq('chat_id', chatId);
-        if (error) {
-            console.log(error);
-        } else {
-            setMessages(data);
-            console.log(data);
+        const MessageChat = supabase.channel('custom-all-channel')
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'message' },
+                (payload) => {
+                    console.log('Change received!', payload)
+                    const msgs = payload.new;
+                    console.log(msgs);
+                    setMessages((messages) => [...messages, msgs]);
+                }
+            )
+            .subscribe()
+
+        return () => {
+            supabase.removeChannel(MessageChat);
+        };
+    }, [supabase, messages, setMessages]);
+
+    async function fetchMessages() {
+        if (messages.length === 0) {
+            const { data, error } = await supabase.from('message').select('*');
+            if (error) {
+                console.log(error);
+            } else {
+                setMessages(data);
+                // console.log(data);
+            }
         }
     }
 
@@ -33,20 +51,13 @@ export default function Chat() {
             alert('no puedes enviar un mensaje vacio')
             return
         };
-        const { data, error } = await supabase
+        const { error } = await supabase
             .from('message')
-            .insert({ message_content: newMessage, sent_by: 1 }).select() //agregar el id del usuario
+            .insert({ message_content: newMessage, sent_by: 1 }) //agregar el id del usuario
         if (error) {
             alert(error['message']);
-        } else {
-            const { chat, error2 } = await supabase.from('chat_message').insert({ chat_id: 1, message_id: data[0].message_id }).select() //agregar el id del chat
-            if (error2) {
-                alert(error2['message']);
-            }
-            console.log(chat);
         }
-        // console.log(data);
-
+        return ''
     }
 
     function getDate(date) {
@@ -55,13 +66,13 @@ export default function Chat() {
     }
 
     return (
-        <div className=" rounded-md flex justify-center min-w-full min-h-[40rem] h-full bg-slate-600">
-            <div className='w-1/4 h-full py-4 overflow-hidden overflow-y-auto'>
+        <div className=" rounded-md flex justify-center min-w-full max-h-[1000px]">
+            {/* <div className='w-1/4 h-full py-4 overflow-hidden overflow-y-auto'>
                 <ChatsList />
-            </div>
+            </div> */}
             <div className=" rounded-md flex flex-col justify-center w-3/4 min-h-full bg-gray-800">
-                <div className='w-full h-full flex flex-col pt-4 px-4 overflow-hidden overflow-y-auto gap-1'>
-                    {messages.map((message, index) => <Message key={index} message={message?.message?.message_content} date={getDate(message.message?.created_at)} isUser={message.message?.sent_by == user} user={message.message?.sent_by} />)}
+                <div className='w-full h-full flex flex-col pt-4 px-4 overflow-hidden overflow-y-auto gap-2' > {/* add auto scroll */}
+                    {messages.map((message, index) => <Message key={index} message={message?.message_content} date={getDate(message.created_at)} isUser={message.sent_by == user} user={message.sent_by} />)}
                 </div>
                 <div className='w-full flex p-4  '>
                     <form className='w-full flex'>
@@ -71,7 +82,6 @@ export default function Chat() {
                      focus:bg-gray-300 focus:shadow-outline rounded-l-md py-2 px-4 max-h-[45px] w-full text-black border-l-2 border-y-2'
                             placeholder='Ingrese su mensaje...'
                             onChange={(e) => setNewMessage(e.target.value)}
-                        // onKeyDownCapture={(e) => { e.keyCode == 13 && handleMessage() }}
                         />
                         <button
                             className=' border-2 border-gray-950 max-h-[45px] max-w-[45px] w-[4rem] bg-slate-600 rounded-r-md p-2'
@@ -88,4 +98,3 @@ export default function Chat() {
         </div>
     )
 }
-
