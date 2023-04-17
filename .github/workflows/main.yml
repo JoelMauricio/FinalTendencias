@@ -33,8 +33,11 @@ jobs:
           cd class-chat
           npm run format:fix
 
-      # - name: Test with PyTest
-      #   run: pytest test_queries.py --doctest-modules --junitxml=junit/test-results-${{ github.ref_name }}.xml
+      - name: Test with Jest
+        run: |
+        cd class-chat
+        npm run jest --doctest-modules --junitxml=junit/test-results-${{ github.ref_name }}.xml
+      continue-on-error: true
 
       # - name: Upload pytest test results
       #   uses: actions/upload-artifact@v3
