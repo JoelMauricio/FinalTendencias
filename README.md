@@ -10,7 +10,7 @@ Los siguientes puntos son los esperados por cada equipo a implementar:
     - [ ] Exposición de Puertos
     - [x] Dependencias  
     - [ ] Concurrencia
-    - [ ] Configuración  
+    - [x] Configuración  
     - [ ] Procesos Administrativos
     - [ ] Servicios de Apoyo
 
@@ -27,7 +27,7 @@ Los siguientes puntos son los esperados por cada equipo a implementar:
 
 ### Networking
 
-    - [ ] En caso de ser una aplicación web, exponer algún servicio o tarea; o bien consumir algún otro servicio mediante otro protocolo distinto al HTTP ya sea UDP, WebSocket o GraphQL.
+    - [x] En caso de ser una aplicación web, exponer algún servicio o tarea; o bien consumir algún otro servicio mediante otro protocolo distinto al HTTP ya sea UDP, WebSocket o GraphQL.
 
 ___
 
