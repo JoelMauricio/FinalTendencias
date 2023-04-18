@@ -11,8 +11,8 @@ Los siguientes puntos son los esperados por cada equipo a implementar:
     - [x] Dependencias  
     - [~] Concurrencia
     - [x] Configuración
-    - [ ] Procesos Administrativos
-    - [ ] Servicios de Apoyo
+    - [~] Procesos Administrativos
+    - [~] Servicios de Apoyo
 
 ### Implementar un flujo de CI/CD
 
