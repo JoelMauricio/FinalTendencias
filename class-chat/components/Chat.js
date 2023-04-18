@@ -11,7 +11,7 @@ export default function Chat() {
   const session = useSession()
   const [userId, setUserId] = useState(1);
 
-  console.log(session, userId)
+  // console.log(session, userId)
   useEffect(() => {
     fetchMessages();
     getUserId();
@@ -22,9 +22,9 @@ export default function Chat() {
         "postgres_changes",
         { event: "*", schema: "public", table: "message" },
         (payload) => {
-          console.log("Change received!", payload);
+          // console.log("Change received!", payload);
           const msgs = payload.new;
-          console.log(msgs);
+          // console.log(msgs);
           setMessages((messages) => [...messages, msgs]);
         }
       )
@@ -37,7 +37,7 @@ export default function Chat() {
 
   async function fetchMessages() {
     if (messages.length === 0) {
-      const { data, error } = await supabase.from("message").select("*");
+      const { data, error } = await supabase.from("message").select("*,user(*)");
       if (error) {
         console.log(error);
       } else {
@@ -71,7 +71,7 @@ export default function Chat() {
     }
     const { error } = await supabase
       .from("message")
-      .insert({ message_content: newMessage, sent_by: userId }); //agregar el id del usuario
+      .insert({ message_content: newMessage, sent_by: userId });
     if (error) {
       alert(error["message"]);
     }
@@ -96,7 +96,6 @@ export default function Chat() {
       ) : (null)}
       <div className=" rounded-md flex flex-col justify-center w-3/4 min-h-full bg-gray-800">
         <div className="w-full h-full flex flex-col pt-4 px-4 overflow-hidden overflow-y-auto gap-2">
-          {" "}
           {/* add auto scroll */}
           {messages.map((message, index) => (
             <Message
@@ -104,7 +103,7 @@ export default function Chat() {
               message={message?.message_content}
               date={getDate(message.created_at)}
               isUser={message.sent_by == userId}
-              user={message.sent_by}
+              user={message.user.uuid || 1}
             />
           ))}
         </div>
