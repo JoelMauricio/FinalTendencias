@@ -3,7 +3,7 @@
 ## 1. Pull the Docker Image from Docker Hub
 
 ```cmd
-docker pull joelmauriciohdez/chat-app:sha-#######
+docker pull joelmauriciohdez/chat-app:sha-604346a
 ```
 
 ## 2. Run the Docker Image in a container
@@ -15,3 +15,5 @@ docker pull joelmauriciohdez/chat-app:sha-#######
 ### What you should see
 
 ![i2](./media/WhatShoudBeSeen.jpeg)
+
+
