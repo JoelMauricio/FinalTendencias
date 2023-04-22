@@ -103,7 +103,7 @@ export default function Chat() {
               message={message?.message_content}
               date={getDate(message.created_at)}
               isUser={message.sent_by == userId}
-              user={message.user.uuid || 1}
+              user={message.user?.uuid || 1}
             />
           ))}
         </div>
